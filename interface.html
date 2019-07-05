@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+        <title>**数据取值**</title>
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+        
+        <style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        
+        
+    </head>
+    <body>
+        <p>student 为学生安卓端接口</p>
+<p>teacher 为教师网页端接口</p>
+<ul>
+<li>Request 为向服务器发送的数据</li>
+<li>Response 为服务器返回的数据</li>
+</ul>
+<h3 id="%E6%95%B0%E6%8D%AE%E5%8F%96%E5%80%BC"><strong>数据取值</strong></h3>
+<p>status code:</p>
+<ul>
+<li>200: success</li>
+<li>201: failure</li>
+</ul>
+<p>answer_string:</p>
+<ul>
+<li>single_answer: A|B|C|D|N</li>
+<li>multiple_answer: connect single answer character with '-'.</li>
+</ul>
+<h1 id="student">/student/</h1>
+<h2 id="studentlogin">/student/login/</h2>
+<h3 id="POST">POST</h3>
+<ul>
+<li>Request</li>
+</ul>
+<pre><code class="language-json"><div>{
+    <span class="hljs-attr">"username"</span>: &lt;student's name&gt;,
+    <span class="hljs-attr">"userpassword"</span>: &lt;student's password&gt;
+}
+</div></code></pre>
+<ul>
+<li>Response</li>
+</ul>
+<pre><code class="language-json"><div>{
+    <span class="hljs-attr">"code"</span>: &lt;status code&gt;
+}
+</div></code></pre>
+<h2 id="studenttest">/student/test/</h2>
+<h3 id="GET">GET</h3>
+<ul>
+<li>Response</li>
+</ul>
+<pre><code class="language-json"><div>{
+    <span class="hljs-attr">"tests"</span>: [
+        {
+            test_id: &lt;test ID&gt;,
+            test_name: &lt;test name&gt;,
+        }
+    ]
+}
+</div></code></pre>
+<h3 id="POST-1">POST</h3>
+<ul>
+<li>Request</li>
+</ul>
+<pre><code class="language-json"><div>{
+    <span class="hljs-attr">"test_id"</span>: &lt;test ID&gt;
+}
+</div></code></pre>
+<ul>
+<li>Response</li>
+</ul>
+<pre><code class="language-json"><div>{
+    <span class="hljs-attr">"problems"</span>: [
+        {
+            <span class="hljs-attr">"problem_id"</span>: &lt;problem ID&gt;,
+            <span class="hljs-attr">"problem_type"</span>: &lt;problem type&gt;,
+            <span class="hljs-attr">"duration"</span>: &lt;integer&gt;,
+            <span class="hljs-attr">"content"</span>: &lt;problem content&gt;,
+            <span class="hljs-attr">"options"</span>: [
+                {
+                    <span class="hljs-attr">"option_id"</span>: &lt;option ID&gt;,
+                    <span class="hljs-attr">"content"</span>: &lt;option content&gt;,
+                }
+            ],
+            <span class="hljs-attr">"correct_answer"</span>: &lt;answer_string&gt;
+        }
+    ]
+}
+</div></code></pre>
+<h2 id="studentrecord">/student/record/</h2>
+<h3 id="GET-1">GET</h3>
+<ul>
+<li>Request</li>
+</ul>
+<pre><code class="language-json"><div>{
+    <span class="hljs-attr">"username"</span>: &lt;student's name&gt;,
+}
+</div></code></pre>
+<ul>
+<li>Response</li>
+</ul>
+<pre><code class="language-json"><div>{
+    <span class="hljs-attr">"tests"</span>: [
+        {
+            <span class="hljs-attr">"test_id"</span>: &lt;test ID&gt;,
+            <span class="hljs-attr">"score"</span>: &lt;integer&gt;
+        }
+    ]
+}
+</div></code></pre>
+<h3 id="POST-2">POST</h3>
+<ul>
+<li>Request</li>
+</ul>
+<pre><code class="language-json"><div>{
+    <span class="hljs-attr">"username"</span>: &lt;student's name&gt;,
+    <span class="hljs-attr">"test_id"</span>: &lt;test ID&gt;,
+    <span class="hljs-attr">"score"</span>: &lt;student's score&gt;,
+    <span class="hljs-attr">"student_answers"</span>: [
+        {
+            <span class="hljs-attr">"problem_id"</span>: &lt;problem ID&gt;,
+            <span class="hljs-attr">"correct_answer"</span>: &lt;answer_string&gt;,
+            <span class="hljs-attr">"student_answer"</span>: &lt;answer_string&gt;
+        }
+    ]
+}
+</div></code></pre>
+<ul>
+<li>Response</li>
+</ul>
+<pre><code class="language-json"><div>{
+    <span class="hljs-attr">"code"</span>: <span class="hljs-number">200</span>
+}
+</div></code></pre>
+<h2 id="studentpractice">/student/practice/</h2>
+<h3 id="POST-3">POST</h3>
+<ul>
+<li>Request</li>
+</ul>
+<pre><code class="language-json"><div>{
+    <span class="hljs-attr">"problem_type"</span>: &lt;problem type&gt;,
+    <span class="hljs-attr">"number"</span>: &lt;problem number&gt;
+}
+</div></code></pre>
+<ul>
+<li>Response</li>
+</ul>
+<pre><code class="language-json"><div>{
+    <span class="hljs-attr">"problems"</span>: [
+        {
+            <span class="hljs-attr">"problem_id"</span>: &lt;problem ID&gt;,
+            <span class="hljs-attr">"problem_type"</span>: &lt;problem type&gt;,
+            <span class="hljs-attr">"duration"</span>: &lt;integer&gt;,
+            <span class="hljs-attr">"content"</span>: &lt;problem content&gt;,
+            <span class="hljs-attr">"options"</span>: [
+                {
+                    <span class="hljs-attr">"option_id"</span>: &lt;option ID&gt;,
+                    <span class="hljs-attr">"content"</span>: &lt;option content&gt;,
+                }
+            ],
+            <span class="hljs-attr">"correct_answer"</span>: &lt;answer_string&gt;
+        }
+    ]
+}
+</div></code></pre>
+<h1 id="teacher">/teacher/</h1>
+<h2 id="teacherlogin">/teacher/login/</h2>
+<h3 id="POST-4">POST</h3>
+<ul>
+<li>Request</li>
+</ul>
+<pre><code class="language-json"><div>{
+    <span class="hljs-attr">"username"</span>: &lt;teacher's name&gt;,
+    <span class="hljs-attr">"userpassword"</span>: &lt;teacher's password&gt;
+}
+</div></code></pre>
+<ul>
+<li>Response</li>
+</ul>
+<pre><code class="language-json"><div>{
+    <span class="hljs-attr">"code"</span>: &lt;status code&gt;
+}
+</div></code></pre>
+<h2 id="teachertest">/teacher/test/</h2>
+<h3 id="GET-2">GET</h3>
+<ul>
+<li>Response</li>
+</ul>
+<pre><code class="language-json"><div>{
+    <span class="hljs-attr">"tests"</span>:[
+        {
+            <span class="hljs-attr">"test_id"</span>: &lt;test ID&gt;,
+            <span class="hljs-attr">"test_name"</span>: &lt;test name&gt;,
+            <span class="hljs-attr">"make_time"</span>: &lt;YYYY-MM-DD HH:MM:SS&gt;,
+            <span class="hljs-attr">"start_time"</span>: &lt;YYYY-MM-DD HH:MM:SS&gt;,
+            <span class="hljs-attr">"end_time"</span>: &lt;YYY-MM-DD HH:MM:SS&gt;,
+            <span class="hljs-attr">"maker"</span>: &lt;teacher's name&gt;
+        }
+    ]
+}
+</div></code></pre>
+<h3 id="POST-5">POST</h3>
+<ul>
+<li>Request</li>
+</ul>
+<pre><code class="language-json"><div>{
+    <span class="hljs-attr">"test_id"</span>: &lt;test ID&gt;
+}
+</div></code></pre>
+<ul>
+<li>Response</li>
+</ul>
+<pre><code class="language-json"><div>{
+    <span class="hljs-attr">"student_stats"</span>:[
+        {
+            <span class="hljs-attr">"student_name"</span>: &lt;student's name&gt;,
+            <span class="hljs-attr">"score"</span>: &lt;student's score&gt;,
+            <span class="hljs-attr">"student_answers"</span>: [
+                {
+                    <span class="hljs-attr">"problem_id"</span>: &lt;problem ID&gt;,
+                    <span class="hljs-attr">"correct_answer"</span>: &lt;answer_string&gt;,
+                    <span class="hljs-attr">"student_answer"</span>: &lt;answer_string&gt;
+                }
+            ]
+        }
+    ]
+}
+</div></code></pre>
+<h3 id="PUT">PUT</h3>
+<ul>
+<li>Request</li>
+</ul>
+<pre><code class="language-json"><div>{
+    <span class="hljs-attr">"test_name"</span>: &lt;test name&gt;,
+    <span class="hljs-attr">"start_time"</span>: &lt;YYYY-MM-DD HH:MM:SS&gt;,
+    <span class="hljs-attr">"end_time"</span>: &lt;YYYY-MM-DD HH:MM:SS&gt;,
+    <span class="hljs-attr">"problems"</span>: [&lt;problem ID&gt;]
+}
+</div></code></pre>
+<ul>
+<li>Response</li>
+</ul>
+<pre><code class="language-json"><div>{
+    <span class="hljs-attr">"code"</span>: &lt;status code&gt;
+}
+</div></code></pre>
+<h3 id="DELETE">DELETE</h3>
+<ul>
+<li>Request</li>
+</ul>
+<pre><code class="language-json"><div>{
+    <span class="hljs-attr">"test_id"</span>: &lt;test ID&gt;
+}
+</div></code></pre>
+<ul>
+<li>Response</li>
+</ul>
+<pre><code class="language-json"><div>{
+    <span class="hljs-attr">"code"</span>: &lt;status code&gt;
+}
+</div></code></pre>
+<h2 id="teacherproblems">/teacher/problems/</h2>
+<h3 id="GET-3">GET</h3>
+<ul>
+<li>Response</li>
+</ul>
+<pre><code class="language-json"><div>{
+    <span class="hljs-attr">"problems"</span>: [
+        {
+            <span class="hljs-attr">"problem_id"</span>: &lt;problem ID&gt;,
+            <span class="hljs-attr">"content"</span>: &lt;problem content&gt;,
+            <span class="hljs-attr">"duration"</span>: &lt;problem duration&gt;,
+            <span class="hljs-attr">"problem_type"</span>: &lt;problem type&gt;,
+            <span class="hljs-attr">"maker"</span>: &lt;problem maker&gt;,
+            <span class="hljs-attr">"make_time"</span>: &lt;problem make time&gt;,
+            <span class="hljs-attr">"options"</span>: [&lt;option content&gt;],
+            <span class="hljs-attr">"correct_answer"</span>: &lt;answer_string&gt;
+        }
+    ]
+}
+</div></code></pre>
+<h3 id="POST-6">POST</h3>
+<ul>
+<li>Request</li>
+</ul>
+<pre><code class="language-json"><div>{
+    <span class="hljs-attr">"content"</span>: &lt;problem content&gt;,
+    <span class="hljs-attr">"duration"</span>: &lt;problem duration&gt;,
+    <span class="hljs-attr">"problem_type"</span>: &lt;problem type&gt;,
+    <span class="hljs-attr">"maker"</span>: &lt;teacher's name&gt;,
+    <span class="hljs-attr">"options"</span>: [&lt;option content&gt;],
+    <span class="hljs-attr">"correct_answer"</span>: &lt;answer_string&gt;
+}
+</div></code></pre>
+<ul>
+<li>Response</li>
+</ul>
+<pre><code class="language-json"><div>{
+    <span class="hljs-attr">"code"</span>: &lt;status code&gt;
+}
+</div></code></pre>
+<h3 id="DELETE-1">DELETE</h3>
+<ul>
+<li>Request</li>
+</ul>
+<pre><code class="language-json"><div>{
+    <span class="hljs-attr">"problem_id"</span>: &lt;problem ID&gt;
+}
+</div></code></pre>
+<ul>
+<li>Response</li>
+</ul>
+<pre><code class="language-json"><div>{
+    <span class="hljs-attr">"code"</span>: &lt;status code&gt;
+}
+</div></code></pre>
+
+    </body>
+    </html>
